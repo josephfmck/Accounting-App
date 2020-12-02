@@ -43,6 +43,29 @@ const ReceiptCtrl = (function () {
     getReceiptData: function () {
       return data.receipts;
     },
+    addReceiptItemData: function (dateInput, descriptionInput, amountInput) {
+      let ID;
+
+      //generate/autoincrement id
+      //  Create ID
+      if(data.receipts.length > 0) {
+        //set ID to last item's id + 1
+        ID = data.receipts[data.receipts.length -1].id + 1;
+      } else {
+        //Create first item id
+        ID = 0;
+      }
+      //  Parse date to string
+      dateInput = dateInput.toString();
+
+      //  Create new Receipt item
+      let newReceiptItem = new Receipt(ID, dateInput, descriptionInput, amountInput);
+
+      //  Add to receipts data structure arr
+      data.receipts.push(newReceiptItem);
+
+      return newReceiptItem;
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
@@ -211,20 +234,20 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
 
         //  Add receipt item event
-        document.querySelector(UISelectors.receiptAddBtn).addEventListener('click', receiptAddEvent);
+        document.querySelector(UISelectors.receiptAddBtn).addEventListener('click', receiptAddBtnEvent);
         //  Add disbursement item event
         document.querySelector(UISelectors.disbursementAddBtn).addEventListener('click', disbursementAddEvent);
     }
 
     //  Add receipt event
-    const receiptAddEvent = function(e) {
+    const receiptAddBtnEvent = function(e) {
       //  Get receipt form input from UICtrl
       const receiptInput = UICtrl.getReceiptInput();
 
       //  Check that date, description, and amount are inputted
       if(receiptInput.date !== '' && receiptInput.description !== '' && receiptInput.amount !== '') {
         //  Add receipt 
-        const newReceipt = ReceiptCtrl.addReceiptItem(receiptInput.date, receiptInput.description, receiptInput.amount);
+        const newReceipt = ReceiptCtrl.addReceiptItemData(receiptInput.date, receiptInput.description, receiptInput.amount);
 
       }
 
