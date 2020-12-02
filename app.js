@@ -48,9 +48,9 @@ const ReceiptCtrl = (function () {
 
       //generate/autoincrement id
       //  Create ID
-      if(data.receipts.length > 0) {
+      if (data.receipts.length > 0) {
         //set ID to last item's id + 1
-        ID = data.receipts[data.receipts.length -1].id + 1;
+        ID = data.receipts[data.receipts.length - 1].id + 1;
       } else {
         //Create first item id
         ID = 0;
@@ -59,7 +59,12 @@ const ReceiptCtrl = (function () {
       dateInput = dateInput.toString();
 
       //  Create new Receipt item
-      let newReceiptItem = new Receipt(ID, dateInput, descriptionInput, amountInput);
+      let newReceiptItem = new Receipt(
+        ID,
+        dateInput,
+        descriptionInput,
+        amountInput
+      );
 
       //  Add to receipts data structure arr
       data.receipts.push(newReceiptItem);
@@ -115,14 +120,18 @@ const DisbursementCtrl = (function () {
     getDisbursementData: function () {
       return data.disbursements;
     },
-    addDisbursementItemData: function(dateInput, descriptionInput, amountInput) {
+    addDisbursementItemData: function (
+      dateInput,
+      descriptionInput,
+      amountInput
+    ) {
       let ID;
 
       //generate/autoincrement id
       //  Create ID
-      if(data.disbursements.length > 0) {
+      if (data.disbursements.length > 0) {
         //set ID to last item's id + 1
-        ID = data.disbursements[data.disbursements.length -1].id + 1;
+        ID = data.disbursements[data.disbursements.length - 1].id + 1;
       } else {
         //Create first item id
         ID = 0;
@@ -131,7 +140,12 @@ const DisbursementCtrl = (function () {
       dateInput = dateInput.toString();
 
       //  Create new Disbursement item
-      let newDisbursementItem = new Disbursement(ID, dateInput, descriptionInput, amountInput);
+      let newDisbursementItem = new Disbursement(
+        ID,
+        dateInput,
+        descriptionInput,
+        amountInput
+      );
 
       //  Add to disburments data structure arr
       data.disbursements.push(newDisbursementItem);
@@ -151,16 +165,15 @@ const UICtrl = (function () {
   //  UISelectors replace hard-coded html selectors
   const UISelectors = {
     receiptList: "#receipt-list",
-    receiptAddBtn: '#receipt-add-btn',
-    receiptDateInput: '#receipt-date',
-    receiptDescriptionInput: '#receipt-description',
-    receiptAmountInput: '#receipt-amount',
+    receiptAddBtn: "#receipt-add-btn",
+    receiptDateInput: "#receipt-date",
+    receiptDescriptionInput: "#receipt-description",
+    receiptAmountInput: "#receipt-amount",
     disbursementList: "#disbursement-list",
-    disbursementAddBtn: '#disbursement-add-btn',
-    disbursementDateInput: '#disbursement-date',
-    disbursementDescriptionInput: '#disbursement-description',
-    disbursementAmountInput: '#disbursement-amount'
-
+    disbursementAddBtn: "#disbursement-add-btn",
+    disbursementDateInput: "#disbursement-date",
+    disbursementDescriptionInput: "#disbursement-description",
+    disbursementAmountInput: "#disbursement-amount",
   };
 
   //  PUBLIC METHODS
@@ -193,7 +206,7 @@ const UICtrl = (function () {
                 `;
       });
 
-      //    Insert Receipt items
+      //  Insert Receipt items
       document.querySelector(UISelectors.receiptList).innerHTML = html;
     },
     populateDisbursementList: function (disbursementItems) {
@@ -224,74 +237,128 @@ const UICtrl = (function () {
         `;
       });
 
-      //    Insert Disbursement items
+      //  Insert Disbursement items
       document.querySelector(UISelectors.disbursementList).innerHTML = html;
     },
-    getUISelectors: function() {
-        return UISelectors;
+    getUISelectors: function () {
+      return UISelectors;
     },
-    getReceiptInput: function() {
+    getReceiptInput: function () {
       return {
         date: document.querySelector(UISelectors.receiptDateInput).value,
-        description: document.querySelector(UISelectors.receiptDescriptionInput).value,
-        amount: document.querySelector(UISelectors.receiptAmountInput).value
-      }
+        description: document.querySelector(UISelectors.receiptDescriptionInput)
+          .value,
+        amount: document.querySelector(UISelectors.receiptAmountInput).value,
+      };
     },
-    getDisbursementInput: function() {
+    getDisbursementInput: function () {
       return {
         date: document.querySelector(UISelectors.disbursementDateInput).value,
-        description: document.querySelector(UISelectors.disbursementDescriptionInput).value,
-        amount: document.querySelector(UISelectors.disbursementAmountInput).value
-      }
-    }
+        description: document.querySelector(
+          UISelectors.disbursementDescriptionInput
+        ).value,
+        amount: document.querySelector(UISelectors.disbursementAmountInput)
+          .value,
+      };
+    },
+    addUIReceiptListItem: function (newReceiptItem) {
+      //  Create li
+      const li = document.createElement("li");
+      //  Add class
+      li.className = "list-group-item";
+      //  Add ID
+      li.id = `receipt-${newReceiptItem.id}`;
+      //  Add html
+      li.innerHTML = `
+      <div class="row">
+      <div class="col-md-2">
+        <em>${newReceiptItem.date}</em>
+      </div>
+      <div class="col-md-6">
+        <p>${newReceiptItem.description}</p>
+      </div>
+
+      <div class="col-md-3">
+        <strong>$${newReceiptItem.amount}</strong>
+      </div>
+      <div class="col-md-1">
+        <a href="#">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>
+      </div>
+    </div>
+      `;
+
+      // Insert item 
+        //beforeend means last item of list
+      document.querySelector(UISelectors.receiptList).insertAdjacentElement('beforeend', li);
+    },
   };
 })();
 
 //  App Controller
 const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
   //PRIVATE
-    //  Load initial event listeners
-    const loadEventListeners = function() {
-        //  Get UI Selectors from UICtrl
-        const UISelectors = UICtrl.getUISelectors();
+  //  Load initial event listeners
+  const loadEventListeners = function () {
+    //  Get UI Selectors from UICtrl
+    const UISelectors = UICtrl.getUISelectors();
 
+    //  Add receipt item event
+    document
+      .querySelector(UISelectors.receiptAddBtn)
+      .addEventListener("click", receiptAddBtnEvent);
+    //  Add disbursement item event
+    document
+      .querySelector(UISelectors.disbursementAddBtn)
+      .addEventListener("click", disbursementAddBtnEvent);
+  };
 
-        //  Add receipt item event
-        document.querySelector(UISelectors.receiptAddBtn).addEventListener('click', receiptAddBtnEvent);
-        //  Add disbursement item event
-        document.querySelector(UISelectors.disbursementAddBtn).addEventListener('click', disbursementAddBtnEvent);
+  //  Add receipt event
+  const receiptAddBtnEvent = function (e) {
+    //  Get receipt form input from UICtrl
+    const receiptInput = UICtrl.getReceiptInput();
+
+    //  Check that date, description, and amount are inputted
+    if (
+      receiptInput.date !== "" &&
+      receiptInput.description !== "" &&
+      receiptInput.amount !== ""
+    ) {
+      //  Add receipt
+      const newReceipt = ReceiptCtrl.addReceiptItemData(
+        receiptInput.date,
+        receiptInput.description,
+        receiptInput.amount
+      );
+
+      UICtrl.addUIReceiptListItem(newReceipt);
     }
 
-    //  Add receipt event
-    const receiptAddBtnEvent = function(e) {
-      //  Get receipt form input from UICtrl
-      const receiptInput = UICtrl.getReceiptInput();
+    e.preventDefault();
+  };
 
-      //  Check that date, description, and amount are inputted
-      if(receiptInput.date !== '' && receiptInput.description !== '' && receiptInput.amount !== '') {
-        //  Add receipt 
-        const newReceipt = ReceiptCtrl.addReceiptItemData(receiptInput.date, receiptInput.description, receiptInput.amount);
+  //  Add Disbursement event
+  const disbursementAddBtnEvent = function (e) {
+    //  Get receipt form input from UICtrl
+    const disbursementInput = UICtrl.getDisbursementInput();
 
-      }
-
-      e.preventDefault();
+    //  Check that date, description, and amount are inputted
+    if (
+      disbursementInput.date !== "" &&
+      disbursementInput.description !== "" &&
+      disbursementInput.amount !== ""
+    ) {
+      //  Add disbursement
+      const newDisbursement = DisbursementCtrl.addDisbursementItemData(
+        disbursementInput.date,
+        disbursementInput.description,
+        disbursementInput.amount
+      );
     }
 
-    //  Add Disbursement event
-    const disbursementAddBtnEvent = function(e) {
-      //  Get receipt form input from UICtrl
-      const disbursementInput = UICtrl.getDisbursementInput();
-
-      //  Check that date, description, and amount are inputted
-      if(disbursementInput.date !== '' && disbursementInput.description !== '' && disbursementInput.amount !== '') {
-        //  Add disbursement
-        const newDisbursement = DisbursementCtrl.addDisbursementItemData(disbursementInput.date, disbursementInput.description, disbursementInput.amount);
-
-      }
-
-      e.preventDefault();
-    }
-
+    e.preventDefault();
+  };
 
   //  PUBLIC METHODS
   return {
