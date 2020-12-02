@@ -183,6 +183,20 @@ const UICtrl = (function () {
     },
     getUISelectors: function() {
         return UISelectors;
+    },
+    getReceiptInput: function() {
+      return {
+        date: document.querySelector(UISelectors.receiptDateInput).value,
+        description: document.querySelector(UISelectors.receiptDescriptionInput).value,
+        amount: document.querySelector(UISelectors.receiptAmountInput).value
+      }
+    },
+    getDisbursementInput: function() {
+      return {
+        date: document.querySelector(UISelectors.disbursementDateInput).value,
+        description: document.querySelector(UISelectors.disbursementDescriptionInput).value,
+        amount: document.querySelector(UISelectors.disbursementAmountInput).value
+      }
     }
   };
 })();
@@ -195,7 +209,28 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
         //  Get UI Selectors from UICtrl
         const UISelectors = UICtrl.getUISelectors();
 
+
+        //  Add receipt item event
+        document.querySelector(UISelectors.receiptAddBtn).addEventListener('click', receiptAddEvent);
+        //  Add disbursement item event
+        document.querySelector(UISelectors.disbursementAddBtn).addEventListener('click', disbursementAddEvent);
     }
+
+    //  Add receipt event
+    const receiptAddEvent = function(e) {
+      //  Get receipt form input from UICtrl
+      const receiptInput = UICtrl.getReceiptInput();
+
+      //  Check that date, description, and amount are inputted
+      if(receiptInput.date !== '' && receiptInput.description !== '' && receiptInput.amount !== '') {
+        //  Add receipt 
+        const newReceipt = ReceiptCtrl.addReceiptItem(receiptInput.date, receiptInput.description, receiptInput.amount);
+
+      }
+
+      e.preventDefault();
+    }
+
 
 
   //  PUBLIC METHODS
@@ -211,6 +246,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       UICtrl.populateReceiptList(receiptItems);
       //  Populate list with disbursementItems
       UICtrl.populateDisbursementList(disbursementItems);
+
+      //  Load Event Listeners
+      loadEventListeners();
     },
   };
 })(ReceiptCtrl, DisbursementCtrl, UICtrl);
