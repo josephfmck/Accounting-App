@@ -105,7 +105,16 @@ const UICtrl = (function () {
   //  UISelectors replace hard-coded html selectors
   const UISelectors = {
     receiptList: "#receipt-list",
+    receiptAddBtn: '#receipt-add-btn',
+    receiptDateInput: '#receipt-date',
+    receiptDescriptionInput: '#receipt-description',
+    receiptAmountInput: '#receipt-amount',
     disbursementList: "#disbursement-list",
+    disbursementAddBtn: '#disbursement-add-btn',
+    disbursementDateInput: '#disbursement-date',
+    disbursementDescriptionInput: '#disbursement-description',
+    disbursementAmountInput: '#disbursement-amount'
+
   };
 
   //  PUBLIC METHODS
@@ -172,12 +181,22 @@ const UICtrl = (function () {
       //    Insert Disbursement items
       document.querySelector(UISelectors.disbursementList).innerHTML = html;
     },
+    getUISelectors: function() {
+        return UISelectors;
+    }
   };
 })();
 
 //  App Controller
 const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
   //PRIVATE
+    //  Load initial event listeners
+    const loadEventListeners = function() {
+        //  Get UI Selectors from UICtrl
+        const UISelectors = UICtrl.getUISelectors();
+
+    }
+
 
   //  PUBLIC METHODS
   return {
