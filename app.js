@@ -115,6 +115,29 @@ const DisbursementCtrl = (function () {
     getDisbursementData: function () {
       return data.disbursements;
     },
+    addDisbursementItemData: function(dateInput, descriptionInput, amountInput) {
+      let ID;
+
+      //generate/autoincrement id
+      //  Create ID
+      if(data.disbursements.length > 0) {
+        //set ID to last item's id + 1
+        ID = data.disbursements[data.disbursements.length -1].id + 1;
+      } else {
+        //Create first item id
+        ID = 0;
+      }
+      //  Parse date to string
+      dateInput = dateInput.toString();
+
+      //  Create new Disbursement item
+      let newDisbursementItem = new Disbursement(ID, dateInput, descriptionInput, amountInput);
+
+      //  Add to disburments data structure arr
+      data.disbursements.push(newDisbursementItem);
+
+      return newDisbursementItem;
+    },
     logData: function () {
       //DisbursementCtrl.logData()
       return data;
@@ -261,7 +284,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Check that date, description, and amount are inputted
       if(disbursementInput.date !== '' && disbursementInput.description !== '' && disbursementInput.amount !== '') {
-        //  Add receipt 
+        //  Add disbursement
         const newDisbursement = DisbursementCtrl.addDisbursementItemData(disbursementInput.date, disbursementInput.description, disbursementInput.amount);
 
       }
