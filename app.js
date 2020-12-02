@@ -236,7 +236,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
         //  Add receipt item event
         document.querySelector(UISelectors.receiptAddBtn).addEventListener('click', receiptAddBtnEvent);
         //  Add disbursement item event
-        document.querySelector(UISelectors.disbursementAddBtn).addEventListener('click', disbursementAddEvent);
+        document.querySelector(UISelectors.disbursementAddBtn).addEventListener('click', disbursementAddBtnEvent);
     }
 
     //  Add receipt event
@@ -254,6 +254,20 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       e.preventDefault();
     }
 
+    //  Add Disbursement event
+    const disbursementAddBtnEvent = function(e) {
+      //  Get receipt form input from UICtrl
+      const disbursementInput = UICtrl.getDisbursementInput();
+
+      //  Check that date, description, and amount are inputted
+      if(disbursementInput.date !== '' && disbursementInput.description !== '' && disbursementInput.amount !== '') {
+        //  Add receipt 
+        const newDisbursement = DisbursementCtrl.addDisbursementItemData(disbursementInput.date, disbursementInput.description, disbursementInput.amount);
+
+      }
+
+      e.preventDefault();
+    }
 
 
   //  PUBLIC METHODS
