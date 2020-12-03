@@ -92,24 +92,24 @@ const DisbursementCtrl = (function () {
   //  Data Structure / State
   const data = {
     disbursements: [
-      {
-        id: 0,
-        date: "01/06/2019",
-        description: "Withdrawal from account",
-        amount: 300.5,
-      },
-      {
-        id: 1,
-        date: "02/11/2019",
-        description: "Withdrawal from account",
-        amount: 40.5,
-      },
-      {
-        id: 2,
-        date: "12/12/2019",
-        description: "Withdrawal from account",
-        amount: 500.98,
-      },
+      // {
+      //   id: 0,
+      //   date: "01/06/2019",
+      //   description: "Withdrawal from account",
+      //   amount: 300.5,
+      // },
+      // {
+      //   id: 1,
+      //   date: "02/11/2019",
+      //   description: "Withdrawal from account",
+      //   amount: 40.5,
+      // },
+      // {
+      //   id: 2,
+      //   date: "12/12/2019",
+      //   description: "Withdrawal from account",
+      //   amount: 500.98,
+      // }
     ],
     currentDisbursement: null,
     totalDisbursements: 0,
@@ -302,6 +302,11 @@ const UICtrl = (function () {
         .insertAdjacentElement("beforeend", li);
     },
     addUIDisbursementListItem: function (newDisbursementItem) {
+      //  SHOW THE LIST (revert hideList())
+      //so that list is visible once item added
+      document.querySelector(UISelectors.receiptList).style.display = 'block';
+
+      //CREATE/INSERT dynamic list item html
       //  Create li
       const li = document.createElement("li");
       //  Add class
@@ -347,6 +352,9 @@ const UICtrl = (function () {
     },
     hideReceiptList: function() {
       document.querySelector(UISelectors.receiptList).style.display = 'none';
+    },
+    hideDisbursementList: function() {
+      document.querySelector(UISelectors.disbursementList).style.display = 'none';
     }
   };
 })();
@@ -435,7 +443,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       //  Fetch disbursementItems from data structure
       const disbursementItems = DisbursementCtrl.getDisbursementData();
 
-      //  Check if any receiptsItems in data
+      //  CHECK if any receiptsItems in data
       if(receiptItems.length === 0) {
         //  If none in data, then none in UI
         //  hide receipt list
@@ -445,9 +453,14 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
         UICtrl.populateReceiptList(receiptItems);
       }
 
-      //  Populate list with disbursementItems
-      UICtrl.populateDisbursementList(disbursementItems);
-
+      //  CHECK if any disbursementItems in data
+      if(disbursementItems.length === 0) {
+        //  If none in data, hide list
+        UICtrl.hideDisbursementList();
+      } else {
+        //  Populate list with disbursementItems
+        UICtrl.populateDisbursementList(disbursementItems);
+      }
 
 
       //  Load Event Listeners
