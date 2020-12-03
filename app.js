@@ -328,6 +328,16 @@ const UICtrl = (function () {
       document
         .querySelector(UISelectors.disbursementList)
         .insertAdjacentElement("beforeend", li);
+    },
+    clearFormInput: function() {
+      //  Clear for receipt form inputs
+      document.querySelector(UISelectors.receiptDateInput).value = '';
+      document.querySelector(UISelectors.receiptDescriptionInput).value = '';
+      document.querySelector(UISelectors.receiptAmountInput).value = '';
+      //  Clear for disbursement form inputs
+      document.querySelector(UISelectors.disbursementDateInput).value = '';      
+      document.querySelector(UISelectors.disbursementDescriptionInput).value = '';      
+      document.querySelector(UISelectors.disbursementAmountInput).value = '';
     }
   };
 })();
@@ -368,7 +378,11 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
         receiptInput.amount
       );
 
+      //  Add item to UI list
       UICtrl.addUIReceiptListItem(newReceipt);
+
+      //  Clear form input
+      UICtrl.clearFormInput();
     }
 
     e.preventDefault();
@@ -392,7 +406,11 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
         disbursementInput.amount
       );
 
+      //  Add item to UI list
       UICtrl.addUIDisbursementListItem(newDisbursement);
+
+      //  Clear form input
+      UICtrl.clearFormInput();
     }
 
     e.preventDefault();
