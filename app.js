@@ -304,7 +304,7 @@ const UICtrl = (function () {
     addUIDisbursementListItem: function (newDisbursementItem) {
       //  SHOW THE LIST (revert hideList())
       //so that list is visible once item added
-      document.querySelector(UISelectors.receiptList).style.display = 'block';
+      document.querySelector(UISelectors.disbursementList).style.display = 'block';
 
       //CREATE/INSERT dynamic list item html
       //  Create li
