@@ -289,10 +289,46 @@ const UICtrl = (function () {
     </div>
       `;
 
-      // Insert item 
-        //beforeend means last item of list
-      document.querySelector(UISelectors.receiptList).insertAdjacentElement('beforeend', li);
+      // Insert item
+      //beforeend means last item of list
+      document
+        .querySelector(UISelectors.receiptList)
+        .insertAdjacentElement("beforeend", li);
     },
+    addUIDisbursementListItem: function (newDisbursementItem) {
+      //  Create li
+      const li = document.createElement("li");
+      //  Add class
+      li.className = "list-group-item";
+      //  Add ID
+      li.id = `receipt-${newDisbursementItem.id}`;
+      //  Add html
+      li.innerHTML = `
+            <div class="row">
+            <div class="col-md-2">
+              <em>${newDisbursementItem.date}</em>
+            </div>
+            <div class="col-md-6">
+              <p>${newDisbursementItem.description}</p>
+            </div>
+      
+            <div class="col-md-3">
+              <strong>$${newDisbursementItem.amount}</strong>
+            </div>
+            <div class="col-md-1">
+              <a href="#">
+                <i class="edit-item fa fa-pencil"></i>
+              </a>
+            </div>
+          </div>
+            `;
+
+      // Insert item
+      //beforeend means last item of list
+      document
+        .querySelector(UISelectors.disbursementList)
+        .insertAdjacentElement("beforeend", li);
+    }
   };
 })();
 
@@ -355,6 +391,8 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
         disbursementInput.description,
         disbursementInput.amount
       );
+
+      UICtrl.addUIDisbursementListItem(newDisbursement);
     }
 
     e.preventDefault();
