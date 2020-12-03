@@ -71,6 +71,19 @@ const ReceiptCtrl = (function () {
 
       return newReceiptItem;
     },
+    getTotalReceiptAmountData: function() {
+      let total = 0;
+
+      //  Loop through receipt items and add amounts
+      data.receipts.forEach((item) => {
+        total += item.amount;
+      });
+
+      //  Set total receipt amount in data structure
+      data.totalReceipts = total;
+
+      return data.totalReceipts;
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
@@ -397,6 +410,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Add item to UI list
       UICtrl.addUIReceiptListItem(newReceipt);
+
+      //  Get totalReceipt from data structure
+      const totalReceiptAmount = ReceiptCtrl.getTotalReceiptAmountData();
 
       //  Clear form input
       UICtrl.clearBothFormsInput();
