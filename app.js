@@ -413,7 +413,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.receiptDeleteBtn).style.display = 'none';
       document.querySelector(UISelectors.receiptBackBtn).style.display = 'none';
       //  Show addBtn
-      document.querySelector(UISelectors.receiptAddBtn).style.display = 'block';
+      document.querySelector(UISelectors.receiptAddBtn).style.display = 'inline';
 
       //DISBURSEMENTS
       //  Hide backBtn, updateBtn, deleteBtn
@@ -421,7 +421,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.disbursementDeleteBtn).style.display = 'none';
       document.querySelector(UISelectors.disbursementBackBtn).style.display = 'none';
       //  Show addBtn
-      document.querySelector(UISelectors.disbursementAddBtn).style.display = 'block';
+      document.querySelector(UISelectors.disbursementAddBtn).style.display = 'inline';
     }
   };
 })();
