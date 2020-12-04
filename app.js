@@ -203,12 +203,18 @@ const UICtrl = (function () {
     receiptDescriptionInput: "#receipt-description",
     receiptAmountInput: "#receipt-amount",
     receiptAmountTotal: '.total-receipts',
+    receiptUpdateBtn: '#receipt-update-btn',
+    receiptDeleteBtn: '#receipt-delete-btn',
+    receiptBackBtn: '#receipt-back-btn',
     disbursementList: "#disbursement-list",
     disbursementAddBtn: "#disbursement-add-btn",
     disbursementDateInput: "#disbursement-date",
     disbursementDescriptionInput: "#disbursement-description",
     disbursementAmountInput: "#disbursement-amount",
-    disbursementAmountTotal: '.total-disbursements'
+    disbursementAmountTotal: '.total-disbursements',
+    disbursementUpdateBtn: '#disbursement-update-btn',
+    disbursementDeleteBtn: '#disbursement-delete-btn',
+    disbursementBackBtn: '#disbursement-back-btn'
   };
 
   //  PUBLIC METHODS
@@ -396,6 +402,26 @@ const UICtrl = (function () {
     },
     showUITotalDisbursementAmount: function(totalDisbursements) {
       document.querySelector(UISelectors.disbursementAmountTotal).textContent = totalDisbursements; 
+    },
+    clearBothEditStates: function() {
+      //clear inputs
+      UICtrl.clearBothFormsInput();
+
+      //RECEIPTS
+      //  Hide backBtn, updateBtn, deleteBtn
+      document.querySelector(UISelectors.receiptUpdateBtn).style.display = 'none';
+      document.querySelector(UISelectors.receiptDeleteBtn).style.display = 'none';
+      document.querySelector(UISelectors.receiptBackBtn).style.display = 'none';
+      //  Show addBtn
+      document.querySelector(UISelectors.receiptAddBtn).style.display = 'block';
+
+      //DISBURSEMENTS
+      //  Hide backBtn, updateBtn, deleteBtn
+      document.querySelector(UISelectors.disbursementUpdateBtn).style.display = 'none';
+      document.querySelector(UISelectors.disbursementDeleteBtn).style.display = 'none';
+      document.querySelector(UISelectors.disbursementBackBtn).style.display = 'none';
+      //  Show addBtn
+      document.querySelector(UISelectors.disbursementAddBtn).style.display = 'block';
     }
   };
 })();
@@ -490,6 +516,10 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
   return {
     init: function () {
       console.log("Intializing App");
+
+      //  Clear edit state for both forms / set intial state
+      UICtrl.clearBothEditStates();
+
       //FETCH DATA
       //  Fetch receiptItems from data structure
       const receiptItems = ReceiptCtrl.getReceiptData();
