@@ -370,7 +370,7 @@ const UICtrl = (function () {
     hideDisbursementList: function() {
       document.querySelector(UISelectors.disbursementList).style.display = 'none';
     },
-    showUITotalReceiptAmount: function() {
+    showUITotalReceiptAmount: function(totalReceipts) {
       document.querySelector(UISelectors.receiptAmountTotal).textContent = totalReceipts;
     }
   };
