@@ -195,6 +195,7 @@ const UICtrl = (function () {
     disbursementDateInput: "#disbursement-date",
     disbursementDescriptionInput: "#disbursement-description",
     disbursementAmountInput: "#disbursement-amount",
+    disbursementAmountTotal: '.total-disbursements'
   };
 
   //  PUBLIC METHODS
@@ -379,6 +380,9 @@ const UICtrl = (function () {
     },
     showUITotalReceiptAmount: function(totalReceipts) {
       document.querySelector(UISelectors.receiptAmountTotal).textContent = totalReceipts;
+    },
+    showUITotalDisbursementAmount: function(totalDisbursements) {
+      document.querySelector(UISelectors.disbursementAmountTotal).textContent = totalDisbursements; 
     }
   };
 })();
