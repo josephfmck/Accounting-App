@@ -172,6 +172,19 @@ const DisbursementCtrl = (function () {
 
       return newDisbursementItem;
     },
+    getTotalDisbursementAmountData: function() {
+      let total = 0;
+
+      //loop through data and add up amounts
+      data.disbursements.forEach((item) => {
+        total += item.amount;
+      });
+
+      //  Set to total in data structure
+      data.totalDisbursements = total;
+
+      return data.totalDisbursements;
+    },
     logData: function () {
       //DisbursementCtrl.logData()
       return data;
@@ -459,6 +472,12 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Add item to UI list
       UICtrl.addUIDisbursementListItem(newDisbursement);
+
+      //  Get totalReceipt from data structure
+      const totalDisbursementAmount = DisbursementCtrl.getTotalDisbursementAmountData();
+
+      //  Add total receipt amount to UI
+      UICtrl.showUITotalDisbursementAmount(totalDisbursementAmount);
 
       //  Clear form input
       UICtrl.clearBothFormsInput();
