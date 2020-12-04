@@ -55,8 +55,12 @@ const ReceiptCtrl = (function () {
         //Create first item id
         ID = 0;
       }
+
       //  Parse date to string
       dateInput = dateInput.toString();
+
+      //  Parase amount to a number
+      amountInput = parseInt(amountInput);
 
       //  Create new Receipt item
       let newReceiptItem = new Receipt(
@@ -182,7 +186,7 @@ const UICtrl = (function () {
     receiptDateInput: "#receipt-date",
     receiptDescriptionInput: "#receipt-description",
     receiptAmountInput: "#receipt-amount",
-    receiptAmountTotal: '#total-receipts',
+    receiptAmountTotal: '.total-receipts',
     disbursementList: "#disbursement-list",
     disbursementAddBtn: "#disbursement-add-btn",
     disbursementDateInput: "#disbursement-date",
