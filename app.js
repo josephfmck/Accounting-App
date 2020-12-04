@@ -422,6 +422,22 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.disbursementBackBtn).style.display = 'none';
       //  Show addBtn
       document.querySelector(UISelectors.disbursementAddBtn).style.display = 'inline';
+    },
+    showReceiptEditState: function() {
+      //  Show back, update, delete
+      document.querySelector(UISelectors.receiptUpdateBtn).style.display = 'inline';
+      document.querySelector(UISelectors.receiptDeleteBtn).style.display = 'inline';
+      document.querySelector(UISelectors.receiptBackBtn).style.display = 'inline';
+      //  hide add
+      document.querySelector(UISelectors.receiptAddBtn).style.display = 'none';
+    },
+    showDisbursementEditState: function() {
+      //  Show back, update, delete
+      document.querySelector(UISelectors.disbursementUpdateBtn).style.display = 'inline';
+      document.querySelector(UISelectors.disbursementDeleteBtn).style.display = 'inline';
+      document.querySelector(UISelectors.disbursementBackBtn).style.display = 'inline';
+      //  hide add
+      document.querySelector(UISelectors.disbursementAddBtn).style.display = 'none';
     }
   };
 })();
