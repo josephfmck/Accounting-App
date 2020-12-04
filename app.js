@@ -182,6 +182,7 @@ const UICtrl = (function () {
     receiptDateInput: "#receipt-date",
     receiptDescriptionInput: "#receipt-description",
     receiptAmountInput: "#receipt-amount",
+    receiptAmountTotal: '#total-receipts',
     disbursementList: "#disbursement-list",
     disbursementAddBtn: "#disbursement-add-btn",
     disbursementDateInput: "#disbursement-date",
@@ -368,6 +369,9 @@ const UICtrl = (function () {
     },
     hideDisbursementList: function() {
       document.querySelector(UISelectors.disbursementList).style.display = 'none';
+    },
+    showUITotalReceiptAmount: function() {
+      document.querySelector(UISelectors.receiptAmountTotal).textContent = totalReceipts;
     }
   };
 })();
@@ -413,6 +417,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Get totalReceipt from data structure
       const totalReceiptAmount = ReceiptCtrl.getTotalReceiptAmountData();
+
+      //  Add total receipt amount to UI
+      UICtrl.showUITotalReceiptAmount(totalReceiptAmount);
 
       //  Clear form input
       UICtrl.clearBothFormsInput();
