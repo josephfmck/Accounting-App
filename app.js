@@ -156,6 +156,9 @@ const DisbursementCtrl = (function () {
       //  Parse date to string
       dateInput = dateInput.toString();
 
+      //  Parase amount to a number
+      amountInput = parseInt(amountInput);
+
       //  Create new Disbursement item
       let newDisbursementItem = new Disbursement(
         ID,
