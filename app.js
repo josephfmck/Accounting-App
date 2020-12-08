@@ -100,6 +100,10 @@ const ReceiptCtrl = (function () {
       });
       return found;
     },
+    setCurrentReceiptData: function(receiptItemFromData) {
+      //set currentReceipt data prop to item from editBtn event
+      data.currentReceipt = receiptItemFromData;
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
@@ -581,6 +585,10 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       //  Get receipt with id from data 
       const receiptItemToEdit = ReceiptCtrl.getReceiptDataByID(id);
       console.log(receiptItemToEdit);
+
+      //  Set currentReceipt data prop
+      ReceiptCtrl.setCurrentReceiptData(receiptItemToEdit);
+
 
     }
 
