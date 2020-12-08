@@ -88,6 +88,18 @@ const ReceiptCtrl = (function () {
 
       return data.totalReceipts;
     },
+    getReceiptDataByID: function(uiItemID) {
+      let found = null;
+      //  Loop receipt items
+      data.receipts.forEach((item) => {
+        //compare data items id to id passed in
+        if(item.id === uiItemID) {
+          //set when id's same
+          found = item;
+        }
+      });
+      return found;
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
