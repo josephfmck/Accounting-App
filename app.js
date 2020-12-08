@@ -197,6 +197,18 @@ const DisbursementCtrl = (function () {
 
       return data.totalDisbursements;
     },
+    getDisbursementDataByID: function(uiItemID) {
+      let found = null;
+      //  Loop disbursement items
+      data.disbursements.forEach((item) => {
+        //compare data items id to id passed in
+        if(item.id === uiItemID) {
+          //set when id's same
+          found = item;
+        }
+      });
+      return found;
+    },
     logData: function () {
       //DisbursementCtrl.logData()
       return data;
