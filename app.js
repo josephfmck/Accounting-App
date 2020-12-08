@@ -353,7 +353,7 @@ const UICtrl = (function () {
       //  Add class
       li.className = "list-group-item";
       //  Add ID
-      li.id = `receipt-${newDisbursementItem.id}`;
+      li.id = `disbursement-${newDisbursementItem.id}`;
       //  Add html
       li.innerHTML = `
             <div class="row">
@@ -556,7 +556,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //event delegation, grabbed parent element list
     //check if target edit icon has class 'edit-item'
     if(e.target.classList.contains('edit-item')) {
-      //  Get list item id ("receipt-0" etc.)
+      //  Get list item id ("disbursement-0" etc.)
       //parent = atag, parent = div, parent = row, parent = li
       const listID = e.target.parentNode.parentNode.parentNode.parentNode.id;
       console.log(listID);
