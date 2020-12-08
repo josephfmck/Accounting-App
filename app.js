@@ -546,6 +546,17 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       const listID = e.target.parentNode.parentNode.parentNode.parentNode.id;
       console.log(listID);
 
+      //  Break into an array
+      //split by the -
+      const listIDArr = listID.split("-");
+      console.log(listIDArr); //['receipt', '0']
+
+      //  Get the actual id #
+      const id = parseInt(listIDArr[1]);
+
+      //  Get receipt with id from data 
+      const receiptItemToEdit = ReceiptCtrl.getReceiptDataByID(id);
+      console.log(receiptItemToEdit);
 
     }
 
@@ -561,6 +572,17 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       const listID = e.target.parentNode.parentNode.parentNode.parentNode.id;
       console.log(listID);
 
+      //  Break into an array
+      //split by the -
+      const listIDArr = listID.split("-");
+      console.log(listIDArr); //['disbursement', '0']
+
+      //  Get the actual id #
+      const id = parseInt(listIDArr[1]);
+
+      //  Get disbursement with id from data 
+      const disbursementItemToEdit = DisbursementCtrl.getDisbursementDataByID(id);
+      console.log(disbursementItemToEdit);
 
     }
 
