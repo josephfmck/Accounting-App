@@ -321,14 +321,14 @@ const UICtrl = (function () {
       <div class="col-md-2">
         <em>${newReceiptItem.date}</em>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-5">
         <p>${newReceiptItem.description}</p>
       </div>
 
       <div class="col-md-3">
         <strong>$${newReceiptItem.amount}</strong>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
         <a href="#">
           <i class="edit-item fa fa-pencil"></i>
         </a>
@@ -360,14 +360,14 @@ const UICtrl = (function () {
             <div class="col-md-2">
               <em>${newDisbursementItem.date}</em>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
               <p>${newDisbursementItem.description}</p>
             </div>
       
             <div class="col-md-3">
               <strong>$${newDisbursementItem.amount}</strong>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
               <a href="#">
                 <i class="edit-item fa fa-pencil"></i>
               </a>
@@ -458,6 +458,13 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     document
       .querySelector(UISelectors.disbursementAddBtn)
       .addEventListener("click", disbursementAddBtnEvent);
+
+    //  Edit icon receipt event
+    //have to use event delegation so grab parent element list
+    document.querySelector(UISelectors.receiptList).addEventListener('click', receiptUpdateBtnEvent);
+
+    //  Edit icon disbursement event
+    document.querySelector(UISelectors.disbursementList).addEventListener('click', disbursementUpdateBtnEvent);
   };
 
   //  Add receipt event
@@ -471,7 +478,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       receiptInput.description !== "" &&
       receiptInput.amount !== ""
     ) {
-      //  Add receipt
+      //  Add receipt to Data Structure
       const newReceipt = ReceiptCtrl.addReceiptItemData(
         receiptInput.date,
         receiptInput.description,
@@ -523,6 +530,38 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Clear form input
       UICtrl.clearBothFormsInput();
+    }
+
+    e.preventDefault();
+  };
+
+  const receiptUpdateBtnEvent = function(e) {
+    //event delegation, grabbed parent element list
+    //check if target edit icon has class 'edit-item'
+    if(e.target.classList.contains('edit-item')) {
+      console.log('clicked');
+
+      //  Get list item id ("receipt-0" etc.)
+      //parent = atag, parent = div, parent = row, parent = li
+      const listID = e.target.parentNode.parentNode.parentNode.parentNode.id;
+      console.log(listID);
+
+
+    }
+
+    e.preventDefault();
+  };
+
+  const disbursementUpdateBtnEvent = function(e) {
+    //event delegation, grabbed parent element list
+    //check if target edit icon has class 'edit-item'
+    if(e.target.classList.contains('edit-item')) {
+      //  Get list item id ("receipt-0" etc.)
+      //parent = atag, parent = div, parent = row, parent = li
+      const listID = e.target.parentNode.parentNode.parentNode.parentNode.id;
+      console.log(listID);
+
+
     }
 
     e.preventDefault();
