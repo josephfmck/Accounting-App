@@ -104,6 +104,9 @@ const ReceiptCtrl = (function () {
       //set currentReceipt data prop to item from editBtn event
       data.currentReceipt = receiptItemFromData;
     },
+    getCurrentReceiptData: function() {
+      return data.currentReceipt;
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
@@ -214,7 +217,7 @@ const DisbursementCtrl = (function () {
       return found;
     },
     setCurrentDisbursementData: function(disbursementItemFromData) {
-      //set currentReceipt data prop to item from editBtn event
+      //set currentDisbursement data prop to item from editBtn event
       data.currentDisbursement = disbursementItemFromData;
     },
     logData: function () {
@@ -470,6 +473,12 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.disbursementBackBtn).style.display = 'inline';
       //  hide add
       document.querySelector(UISelectors.disbursementAddBtn).style.display = 'none';
+    },
+    addCurrentReceiptToForm: function() {
+      //Adds currentReceipt data from editBtn into the forms inputs
+      document.querySelector(UISelectors.receiptDateInput).value = ReceiptCtrl.getCurrentReceiptData().date;
+      document.querySelector(UISelectors.receiptDescriptionInput).value = ReceiptCtrl.getCurrentReceiptData().description;
+      document.querySelector(UISelectors.receiptAmountInput).value = ReceiptCtrl.getCurrentReceiptData().amount;
     }
   };
 })();
@@ -593,7 +602,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       //  Set currentReceipt data prop
       ReceiptCtrl.setCurrentReceiptData(receiptItemToEdit);
 
-
+      UICtrl.addCurrentReceiptToForm();
     }
 
     e.preventDefault();
