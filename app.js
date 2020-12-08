@@ -213,6 +213,10 @@ const DisbursementCtrl = (function () {
       });
       return found;
     },
+    setCurrentDisbursementData: function(disbursementItemFromData) {
+      //set currentReceipt data prop to item from editBtn event
+      data.currentDisbursement = disbursementItemFromData;
+    },
     logData: function () {
       //DisbursementCtrl.logData()
       return data;
@@ -616,6 +620,8 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       const disbursementItemToEdit = DisbursementCtrl.getDisbursementDataByID(id);
       console.log(disbursementItemToEdit);
 
+      //  Set currentReceipt data prop
+      DisbursementCtrl.setCurrentDisbursementData(disbursementItemToEdit);
     }
 
     e.preventDefault();
