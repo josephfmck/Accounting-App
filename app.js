@@ -527,6 +527,13 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     //  Edit icon disbursement event
     document.querySelector(UISelectors.disbursementList).addEventListener('click', disbursementEditBtnEvent);
+
+
+    //  Update Btn Receipt event
+    document.querySelector(UISelectors.receiptUpdateBtn).addEventListener('click', receiptUpdateBtnEvent);
+
+    //  Update Btn Disbursement event
+    document.querySelector(UISelectors.disbursementUpdateBtn).addEventListener('click', disbursementUpdateBtnEvent);
   };
 
   //  Add receipt event
@@ -656,6 +663,15 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Populate inputs with currentDisbursement data
       UICtrl.addCurrentDisbursementToForm();
+    }
+
+    //  Update Receipt Event
+    const receiptUpdateBtnEvent = function(e) {
+      //  Get receipt input
+      const input = UICtrl.getReceiptInput();
+
+      //  Update receipt in data structure
+      const updatedReceipt = ReceiptCtrl.updateReceiptItemData(input.date, input.description, input.amount);
     }
 
     e.preventDefault();
