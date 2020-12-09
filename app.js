@@ -513,6 +513,14 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       .querySelector(UISelectors.disbursementAddBtn)
       .addEventListener("click", disbursementAddBtnEvent);
 
+    //  Disable submit on enter key, prevents submission when in edit state
+    document.addEventListener('keypress', function(e) {
+      if(e.charCode === 13 || e.keyCode === 13) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
     //  Edit icon receipt event
     //have to use event delegation so grab parent element list
     document.querySelector(UISelectors.receiptList).addEventListener('click', receiptEditBtnEvent);
