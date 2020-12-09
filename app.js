@@ -482,12 +482,16 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.receiptDateInput).value = ReceiptCtrl.getCurrentReceiptData().date;
       document.querySelector(UISelectors.receiptDescriptionInput).value = ReceiptCtrl.getCurrentReceiptData().description;
       document.querySelector(UISelectors.receiptAmountInput).value = ReceiptCtrl.getCurrentReceiptData().amount;
+
+      UICtrl.showReceiptEditState();
     },
     addCurrentDisbursementToForm: function() {
       //Adds currentDisbursement data from editBtn into the forms inputs
       document.querySelector(UISelectors.disbursementDateInput).value = DisbursementCtrl.getCurrentDisbursementData().date;
       document.querySelector(UISelectors.disbursementDescriptionInput).value = DisbursementCtrl.getCurrentDisbursementData().description;
       document.querySelector(UISelectors.disbursementAmountInput).value = DisbursementCtrl.getCurrentDisbursementData().amount;
+
+      UICtrl.showDisbursementEditState();
     }
   };
 })();
@@ -511,10 +515,10 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     //  Edit icon receipt event
     //have to use event delegation so grab parent element list
-    document.querySelector(UISelectors.receiptList).addEventListener('click', receiptUpdateBtnEvent);
+    document.querySelector(UISelectors.receiptList).addEventListener('click', receiptEditBtnEvent);
 
     //  Edit icon disbursement event
-    document.querySelector(UISelectors.disbursementList).addEventListener('click', disbursementUpdateBtnEvent);
+    document.querySelector(UISelectors.disbursementList).addEventListener('click', disbursementEditBtnEvent);
   };
 
   //  Add receipt event
@@ -585,7 +589,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     e.preventDefault();
   };
 
-  const receiptUpdateBtnEvent = function(e) {
+  const receiptEditBtnEvent = function(e) {
     //event delegation, grabbed parent element list
     //check if target edit icon has class 'edit-item'
     if(e.target.classList.contains('edit-item')) {
@@ -618,7 +622,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     e.preventDefault();
   };
 
-  const disbursementUpdateBtnEvent = function(e) {
+  const disbursementEditBtnEvent = function(e) {
     //event delegation, grabbed parent element list
     //check if target edit icon has class 'edit-item'
     if(e.target.classList.contains('edit-item')) {
@@ -639,10 +643,10 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       const disbursementItemToEdit = DisbursementCtrl.getDisbursementDataByID(id);
       console.log(disbursementItemToEdit);
 
-      //  Set currentReceipt data prop
+      //  Set currentDisbursement data prop
       DisbursementCtrl.setCurrentDisbursementData(disbursementItemToEdit);
 
-      //  Populate inputs with currentReceipt data
+      //  Populate inputs with currentDisbursement data
       UICtrl.addCurrentDisbursementToForm();
     }
 
