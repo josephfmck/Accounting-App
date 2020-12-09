@@ -220,6 +220,9 @@ const DisbursementCtrl = (function () {
       //set currentDisbursement data prop to item from editBtn event
       data.currentDisbursement = disbursementItemFromData;
     },
+    getCurrentDisbursementData: function() {
+      return data.currentDisbursement;
+    },
     logData: function () {
       //DisbursementCtrl.logData()
       return data;
@@ -479,6 +482,12 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.receiptDateInput).value = ReceiptCtrl.getCurrentReceiptData().date;
       document.querySelector(UISelectors.receiptDescriptionInput).value = ReceiptCtrl.getCurrentReceiptData().description;
       document.querySelector(UISelectors.receiptAmountInput).value = ReceiptCtrl.getCurrentReceiptData().amount;
+    },
+    addCurrentDisbursementToForm: function() {
+      //Adds currentDisbursement data from editBtn into the forms inputs
+      document.querySelector(UISelectors.disbursementDateInput).value = DisbursementCtrl.getCurrentDisbursementData().date;
+      document.querySelector(UISelectors.disbursementDescriptionInput).value = DisbursementCtrl.getCurrentDisbursementData().description;
+      document.querySelector(UISelectors.disbursementAmountInput).value = DisbursementCtrl.getCurrentDisbursementData().amount;
     }
   };
 })();
@@ -602,6 +611,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       //  Set currentReceipt data prop
       ReceiptCtrl.setCurrentReceiptData(receiptItemToEdit);
 
+      //  Populate inputs with currentReceipt data
       UICtrl.addCurrentReceiptToForm();
     }
 
@@ -631,6 +641,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Set currentReceipt data prop
       DisbursementCtrl.setCurrentDisbursementData(disbursementItemToEdit);
+
+      //  Populate inputs with currentReceipt data
+      UICtrl.addCurrentDisbursementToForm();
     }
 
     e.preventDefault();
