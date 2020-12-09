@@ -107,6 +107,30 @@ const ReceiptCtrl = (function () {
     getCurrentReceiptData: function() {
       return data.currentReceipt;
     },
+    updateReceiptItemData: function(dateInput, descriptionInput, amountInput) {
+      //  Parse date to string
+      dateInput = dateInput.toString();
+
+      //  Parase amount to a number
+      amountInput = parseInt(amountInput);
+
+      let found = null;
+
+      //  loop
+      data.receipts.forEach((item) => {
+        //  check id = item id we clicked editbtn on
+        if(item.id === data.currentReceipt.id) {
+          //  update/set that items data
+          item.date = dateInput;
+          item.description = descriptionInput;
+          item.amount = amountInput;
+          //  set found to this item
+          found = item;
+        }
+      });
+
+      return found; //  receipt item updated
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
@@ -533,7 +557,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     document.querySelector(UISelectors.receiptUpdateBtn).addEventListener('click', receiptUpdateBtnEvent);
 
     //  Update Btn Disbursement event
-    document.querySelector(UISelectors.disbursementUpdateBtn).addEventListener('click', disbursementUpdateBtnEvent);
+    // document.querySelector(UISelectors.disbursementUpdateBtn).addEventListener('click', disbursementUpdateBtnEvent);
   };
 
   //  Add receipt event
@@ -665,16 +689,18 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       UICtrl.addCurrentDisbursementToForm();
     }
 
-    //  Update Receipt Event
-    const receiptUpdateBtnEvent = function(e) {
-      //  Get receipt input
-      const input = UICtrl.getReceiptInput();
-
-      //  Update receipt in data structure
-      const updatedReceipt = ReceiptCtrl.updateReceiptItemData(input.date, input.description, input.amount);
-    }
-
     e.preventDefault();
+  };
+
+  //  Update Receipt Event
+  const receiptUpdateBtnEvent = function(e) {
+    //  Get receipt input
+    const input = UICtrl.getReceiptInput();
+  
+    //  Update receipt in data structure
+    const updatedReceipt = ReceiptCtrl.updateReceiptItemData(input.date, input.description, input.amount);
+  
+    console.log(updatedReceipt);
   };
 
   //  PUBLIC METHODS
