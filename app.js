@@ -871,6 +871,17 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
         UICtrl.populateDisbursementList(disbursementItems);
       }
 
+      //  GET TOTAL AND SHOW UI
+      //  Get total receipts
+      const totalReceipts = ReceiptCtrl.getTotalReceiptAmountData();
+      //  Add total receipts UI
+      UICtrl.showUITotalReceiptAmount(totalReceipts);
+
+      //  Get total disbursements
+      const totalDisbursements = DisbursementCtrl.getTotalDisbursementAmountData();
+      //  Add total disbusements UI
+      UICtrl.showUITotalDisbursementAmount(totalDisbursements);
+
 
       //  Load Event Listeners
       loadEventListeners();
