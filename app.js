@@ -111,7 +111,7 @@ const ReceiptCtrl = (function () {
       //  Parse date to string
       dateInput = dateInput.toString();
 
-      //  Parase amount to a number
+      //  Parse amount to a number
       amountInput = parseInt(amountInput);
 
       let found = null;
@@ -246,6 +246,30 @@ const DisbursementCtrl = (function () {
     },
     getCurrentDisbursementData: function() {
       return data.currentDisbursement;
+    },
+    updateDisbursementItemData: function(dateInput, descriptionInput, amountInput) {
+      //  Parse date to string
+      dateInput = dateInput.toString();
+
+      //  Parse amount to a number
+      amountInput = parseInt(amountInput);
+
+      let found = null;
+
+      //  loop
+      data.disbursements.forEach((item) => {
+        //  check id = item id we clicked editbtn on
+        if(item.id === data.currentDisbursement.id) {
+          //  update/set that items data
+          item.date = dateInput;
+          item.description = descriptionInput;
+          item.amount = amountInput;
+          //  set found to this item
+          found = item;
+        }
+      });
+
+      return found; //  receipt item updated
     },
     logData: function () {
       //DisbursementCtrl.logData()
@@ -557,7 +581,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     document.querySelector(UISelectors.receiptUpdateBtn).addEventListener('click', receiptUpdateBtnEvent);
 
     //  Update Btn Disbursement event
-    // document.querySelector(UISelectors.disbursementUpdateBtn).addEventListener('click', disbursementUpdateBtnEvent);
+    document.querySelector(UISelectors.disbursementUpdateBtn).addEventListener('click', disbursementUpdateBtnEvent);
   };
 
   //  Add receipt event
@@ -701,6 +725,17 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     const updatedReceipt = ReceiptCtrl.updateReceiptItemData(input.date, input.description, input.amount);
   
     console.log(updatedReceipt);
+  };
+
+  //  Update Disbursement Event
+  const disbursementUpdateBtnEvent = function(e) {
+    //  Get disbursement input
+    const input = UICtrl.getDisbursementInput();
+
+    //  Update disbursement in data structure
+    const updatedDisbursement = DisbursementCtrl.updateDisbursementItemData(input.date, input.description, input.amount);
+
+    console.log(updatedDisbursement);
   };
 
   //  PUBLIC METHODS
