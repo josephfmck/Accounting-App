@@ -577,6 +577,41 @@ const UICtrl = (function () {
           `;
         }
       });
+    },
+    updateDisbursementItemUI: function(updatedDisbursement) {
+      let listDisbursementItems = document.querySelectorAll(UISelectors.disbursementListItems);
+
+      //  Convert Node list to arr
+      listDisbursementItems = Array.from(listDisbursementItems);
+
+      listDisbursementItems.forEach((listItem) => {
+        //  Get id for each item
+        const itemID = listItem.getAttribute('id');
+
+        //  Check itemID = id of updatedReceipt passed in
+        if(itemID === `disbursement-${updatedDisbursement.id}`) {
+          //  Update that item's html
+          document.querySelector(`#${itemID}`).innerHTML = `
+          <div class="row">
+          <div class="col-md-2">
+            <em>${updatedDisbursement.date}</em>
+          </div>
+          <div class="col-md-5">
+            <p>${updatedDisbursement.description}</p>
+          </div>
+    
+          <div class="col-md-3">
+            <strong>$${updatedDisbursement.amount}</strong>
+          </div>
+          <div class="col-md-2">
+            <a href="#">
+              <i class="edit-item fa fa-pencil"></i>
+            </a>
+          </div>
+        </div>
+          `;
+        }
+      });
     }
   };
 })();
@@ -763,7 +798,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     console.log(updatedReceipt);
 
-    //  Update UI
+    //  Update UI with updatedReceipt
     UICtrl.updateReceiptItemUI(updatedReceipt);
   
     //  Update Total Receipt Amount
@@ -787,6 +822,20 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     const updatedDisbursement = DisbursementCtrl.updateDisbursementItemData(input.date, input.description, input.amount);
 
     console.log(updatedDisbursement);
+
+    //  Update UI with updatedDisbursement
+    UICtrl.updateDisbursementItemUI(updatedDisbursement);
+
+    //  Update Total Disbursement Amount
+    //  Get total disbursement amount
+    const totalDisbursementAmount = DisbursementCtrl.getTotalDisbursementAmountData();
+
+    //  Add total amount to UI
+    UICtrl.showUITotalDisbursementAmount(totalDisbursementAmount);
+
+    UICtrl.clearBothEditStates();
+
+    e.preventDefault();
   };
 
   //  PUBLIC METHODS
