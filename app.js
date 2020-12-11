@@ -543,8 +543,8 @@ const UICtrl = (function () {
 
       UICtrl.showDisbursementEditState();
     },
-    updatedReceiptItemUI: function(updatedReceipt) {
-      let listReceiptItems = document.querySelectorAll(UISelectors.listReceiptItems);
+    updateReceiptItemUI: function(updatedReceipt) {
+      let listReceiptItems = document.querySelectorAll(UISelectors.receiptListItems);
 
       //  Convert Node list to arr
       listReceiptItems = Array.from(listReceiptItems);
@@ -554,7 +554,7 @@ const UICtrl = (function () {
         const itemID = listItem.getAttribute('id');
 
         //  Check itemID = id of updatedReceipt passed in
-        if(itemID === `item-${updatedReceipt.id}`) {
+        if(itemID === `receipt-${updatedReceipt.id}`) {
           //  Update that item's html
           document.querySelector(`#${itemID}`).innerHTML = `
           <div class="row">
@@ -761,8 +761,10 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Update receipt in data structure
     const updatedReceipt = ReceiptCtrl.updateReceiptItemData(input.date, input.description, input.amount);
 
+    console.log(updatedReceipt);
+
     //  Update UI
-    UICtrl.updatedReceiptItemUI(updatedReceipt);
+    UICtrl.updateReceiptItemUI(updatedReceipt);
   
     //  Update Total Receipt Amount
     //  Get total receipt amount
