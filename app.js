@@ -292,6 +292,7 @@ const UICtrl = (function () {
     receiptUpdateBtn: '#receipt-update-btn',
     receiptDeleteBtn: '#receipt-delete-btn',
     receiptBackBtn: '#receipt-back-btn',
+    receiptListItems: '#receipt-list li',
     disbursementList: "#disbursement-list",
     disbursementAddBtn: "#disbursement-add-btn",
     disbursementDateInput: "#disbursement-date",
@@ -300,7 +301,8 @@ const UICtrl = (function () {
     disbursementAmountTotal: '.total-disbursements',
     disbursementUpdateBtn: '#disbursement-update-btn',
     disbursementDeleteBtn: '#disbursement-delete-btn',
-    disbursementBackBtn: '#disbursement-back-btn'
+    disbursementBackBtn: '#disbursement-back-btn',
+    disbursementListItems: '#disbursement-list li'
   };
 
   //  PUBLIC METHODS
@@ -540,6 +542,41 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.disbursementAmountInput).value = DisbursementCtrl.getCurrentDisbursementData().amount;
 
       UICtrl.showDisbursementEditState();
+    },
+    updatedReceiptItemUI: function(updatedReceipt) {
+      let listReceiptItems = document.querySelectorAll(UISelectors.listReceiptItems);
+
+      //  Convert Node list to arr
+      listReceiptItems = Array.from(listReceiptItems);
+
+      listReceiptItems.forEach((listItem) => {
+        //  Get id for each item
+        const itemID = listItem.getAttribute('id');
+
+        //  Check itemID = id of updatedReceipt passed in
+        if(itemID === `item-${updatedReceipt.id}`) {
+          //  Update that item's html
+          document.querySelector(`#${itemID}`).innerHTML = `
+          <div class="row">
+          <div class="col-md-2">
+            <em>${updatedReceipt.date}</em>
+          </div>
+          <div class="col-md-5">
+            <p>${updatedReceipt.description}</p>
+          </div>
+    
+          <div class="col-md-3">
+            <strong>$${updatedReceipt.amount}</strong>
+          </div>
+          <div class="col-md-2">
+            <a href="#">
+              <i class="edit-item fa fa-pencil"></i>
+            </a>
+          </div>
+        </div>
+          `;
+        }
+      });
     }
   };
 })();
@@ -723,8 +760,20 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
   
     //  Update receipt in data structure
     const updatedReceipt = ReceiptCtrl.updateReceiptItemData(input.date, input.description, input.amount);
+
+    //  Update UI
+    UICtrl.updatedReceiptItemUI(updatedReceipt);
   
-    console.log(updatedReceipt);
+    //  Update Total Receipt Amount
+    //  Get total receipt amount
+    const totalReceiptAmount = ReceiptCtrl.getTotalReceiptAmountData();
+
+    //  Add total amount to UI
+    UICtrl.showUITotalReceiptAmount(totalReceiptAmount);
+
+    UICtrl.clearBothEditStates();
+
+    e.preventDefault();
   };
 
   //  Update Disbursement Event
