@@ -149,7 +149,7 @@ const ReceiptCtrl = (function () {
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
-    },
+    }
   };
 })();
 
@@ -627,6 +627,16 @@ const UICtrl = (function () {
           `;
         }
       });
+    },
+    deleteReceiptListItemUI: function(currentReceiptID) {
+      console.log(currentReceiptID);
+
+      //  Create ID literal from currentID
+      const receiptLiItemID = `#receipt-${currentReceiptID}`;
+      //  Get receipt item li from this id
+      const liItem = document.querySelector(receiptLiItemID);
+
+      liItem.remove();
     }
   };
 })();
@@ -866,14 +876,21 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
   };
 
   //  Delete Btn event
-  const receiptDeleteBtnEvent = function() {
+  const receiptDeleteBtnEvent = function(e) {
     //  Get current receipt
     const currentItem = ReceiptCtrl.getCurrentReceiptData();
 
     //  Delete from data structure
     ReceiptCtrl.deleteReceiptItemData(currentItem.id);
 
+    //  Delete receipt li from UI
+    UICtrl.deleteReceiptListItemUI(currentItem.id);
 
+
+    //  Clear when finished edit
+    UICtrl.clearBothEditStates();
+
+    e.preventDefault();
   };
 
   //  PUBLIC METHODS
