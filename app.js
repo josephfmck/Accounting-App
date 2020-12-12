@@ -641,6 +641,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       }
     });
 
+    //EDIT ICON EVENTS
     //  Edit icon receipt event
     //have to use event delegation so grab parent element list
     document.querySelector(UISelectors.receiptList).addEventListener('click', receiptEditBtnEvent);
@@ -648,12 +649,20 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Edit icon disbursement event
     document.querySelector(UISelectors.disbursementList).addEventListener('click', disbursementEditBtnEvent);
 
-
+    //UPDATE BTN EVENTS
     //  Update Btn Receipt event
     document.querySelector(UISelectors.receiptUpdateBtn).addEventListener('click', receiptUpdateBtnEvent);
 
     //  Update Btn Disbursement event
     document.querySelector(UISelectors.disbursementUpdateBtn).addEventListener('click', disbursementUpdateBtnEvent);
+
+    //  BACK BTN EVENTS
+    //  Back Btn receipt event
+    document.querySelector(UISelectors.receiptBackBtn).addEventListener('click', UICtrl.clearBothEditStates);
+    //  Back Btn disbursement event
+    document.querySelector(UISelectors.disbursementBackBtn).addEventListener('click', UICtrl.clearBothEditStates);
+    
+
   };
 
   //  Add receipt event
