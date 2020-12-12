@@ -882,9 +882,14 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     //  Delete from data structure
     ReceiptCtrl.deleteReceiptItemData(currentItem.id);
-
     //  Delete receipt li from UI
     UICtrl.deleteReceiptListItemUI(currentItem.id);
+
+    //  Update total amount
+    //  Get total amount
+    const totalAmount = ReceiptCtrl.getTotalReceiptAmountData();
+    //  Update total amount UI
+    UICtrl.showUITotalReceiptAmount(totalAmount);
 
 
     //  Clear when finished edit
