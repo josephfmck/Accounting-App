@@ -131,6 +131,21 @@ const ReceiptCtrl = (function () {
 
       return found; //  receipt item updated
     },
+    deleteReceiptItemData: function(currentReceiptID) {
+      //  Get IDS in Arr
+      //map like foreach but returns new arr
+      let ids = data.receipts.map((item) => {
+        return item.id;
+      }); //returns [0,1, ....];
+
+      //  Get index of currentID
+      //returns index position of currentID found in IDS arr
+      const index = ids.indexOf(currentReceiptID);
+
+      //  Remove receipt
+      //remove 1 at index position 
+      data.receipts.splice(index, 1);
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
@@ -848,6 +863,17 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     UICtrl.clearBothEditStates();
 
     e.preventDefault();
+  };
+
+  //  Delete Btn event
+  const receiptDeleteBtnEvent = function() {
+    //  Get current receipt
+    const currentItem = ReceiptCtrl.getCurrentReceiptData();
+
+    //  Delete from data structure
+    ReceiptCtrl.deleteReceiptItemData(currentItem.id);
+
+
   };
 
   //  PUBLIC METHODS
