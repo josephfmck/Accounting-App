@@ -656,12 +656,15 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Update Btn Disbursement event
     document.querySelector(UISelectors.disbursementUpdateBtn).addEventListener('click', disbursementUpdateBtnEvent);
 
-    //  BACK BTN EVENTS
+    //BACK BTN EVENTS
     //  Back Btn receipt event
     document.querySelector(UISelectors.receiptBackBtn).addEventListener('click', UICtrl.clearBothEditStates);
     //  Back Btn disbursement event
     document.querySelector(UISelectors.disbursementBackBtn).addEventListener('click', UICtrl.clearBothEditStates);
-    
+
+    //DELETE BTN EVENTS
+    //  Delete Btn receipt event
+    document.querySelector(UISelectors.receiptDeleteBtn).addEventListener('click', receiptDeleteBtnEvent);
 
   };
 
