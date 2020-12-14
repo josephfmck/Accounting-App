@@ -286,6 +286,21 @@ const DisbursementCtrl = (function () {
 
       return found; //  receipt item updated
     },
+    deleteDisbursementItemData: function(currentDisbursementID) {
+      //  Get IDS in Arr
+      //map like foreach but returns new arr
+      let ids = data.disbursements.map((item) => {
+        return item.id;
+      }); //returns [0,1, ....];
+
+      //  Get index of currentID
+      //returns index position of currentID found in IDS arr
+      const index = ids.indexOf(currentDisbursementID);
+
+      //  Remove disbursement
+      //remove 1 at index position 
+      data.disbursements.splice(index, 1);
+    },
     logData: function () {
       //DisbursementCtrl.logData()
       return data;
@@ -637,6 +652,14 @@ const UICtrl = (function () {
       const liItem = document.querySelector(receiptLiItemID);
 
       liItem.remove();
+    },
+    deleteDisbursementListItemUI: function(currentDisbursementID) {
+      //  Create ID literal from currentID
+      const disbursementLiItemID = `#disbursement-${currentDisbursementID}`;
+      //  Get disbursement item li from this id
+      const liItem = document.querySelector(disbursementLiItemID);
+
+      liItem.remove();
     }
   };
 })();
@@ -690,6 +713,8 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //DELETE BTN EVENTS
     //  Delete Btn receipt event
     document.querySelector(UISelectors.receiptDeleteBtn).addEventListener('click', receiptDeleteBtnEvent);
+    //  Delete Btn receipt event
+    document.querySelector(UISelectors.disbursementDeleteBtn).addEventListener('click', disbursementDeleteBtnEvent);
 
   };
 
@@ -890,6 +915,29 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     const totalAmount = ReceiptCtrl.getTotalReceiptAmountData();
     //  Update total amount UI
     UICtrl.showUITotalReceiptAmount(totalAmount);
+
+
+    //  Clear when finished edit
+    UICtrl.clearBothEditStates();
+
+    e.preventDefault();
+  };
+
+    //  Delete Btn event
+  const disbursementDeleteBtnEvent = function(e) {
+    //  Get current disbursement
+    const currentItem = DisbursementCtrl.getCurrentDisbursementData();
+
+    //  Delete from data structure
+    DisbursementCtrl.deleteDisbursementItemData(currentItem.id);
+    //  Delete receipt li from UI
+    UICtrl.deleteDisbursementListItemUI(currentItem.id);
+
+    //  Update total amount
+    //  Get total amount
+    const totalAmount = DisbursementCtrl.getTotalDisbursementAmountData();
+    //  Update total amount UI
+    UICtrl.showUITotalDisbursementAmount(totalAmount);
 
 
     //  Clear when finished edit
