@@ -146,6 +146,9 @@ const ReceiptCtrl = (function () {
       //remove 1 at index position 
       data.receipts.splice(index, 1);
     },
+    clearAllReceipts: function() {
+      data.receipts = [];
+    },
     logData: function () {
       //ReceiptCtrl.logData()
       return data;
@@ -301,6 +304,9 @@ const DisbursementCtrl = (function () {
       //remove 1 at index position 
       data.disbursements.splice(index, 1);
     },
+    clearAllDisbursements: function() {
+      data.disbursements = [];
+    },
     logData: function () {
       //DisbursementCtrl.logData()
       return data;
@@ -332,7 +338,8 @@ const UICtrl = (function () {
     disbursementUpdateBtn: '#disbursement-update-btn',
     disbursementDeleteBtn: '#disbursement-delete-btn',
     disbursementBackBtn: '#disbursement-back-btn',
-    disbursementListItems: '#disbursement-list li'
+    disbursementListItems: '#disbursement-list li',
+    clearBtn: '#clear-btn'
   };
 
   //  PUBLIC METHODS
@@ -716,6 +723,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Delete Btn receipt event
     document.querySelector(UISelectors.disbursementDeleteBtn).addEventListener('click', disbursementDeleteBtnEvent);
 
+    //  CLEAR ALL BTN EVENT
+    document.querySelector(UISelectors.clearBtn).addEventListener('click', clearBtnEvent);
+
   };
 
   //  Add receipt event
@@ -930,7 +940,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     //  Delete from data structure
     DisbursementCtrl.deleteDisbursementItemData(currentItem.id);
-    //  Delete receipt li from UI
+    //  Delete disbursement li from UI
     UICtrl.deleteDisbursementListItemUI(currentItem.id);
 
     //  Update total amount
@@ -944,6 +954,24 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     UICtrl.clearBothEditStates();
 
     e.preventDefault();
+  };
+
+  //  Clear all items event
+  const clearBtnEvent = function() {
+    //  Delete all receipts from data 
+    ReceiptCtrl.clearAllReceipts();
+    //  Delete all disbursements from data
+    DisbursementCtrl.clearAllDisbursements();
+    
+    //  Update total amounts
+    //  Get totals
+    const totalReceipts = ReceiptCtrl.getTotalReceiptAmountData();
+    const totalDisbursements = DisbursementCtrl.getTotalDisbursementAmountData();
+    //  Add totals UI
+    UICtrl.showUITotalReceiptAmount(totalReceipts);
+    UICtrl.showUITotalDisbursementAmount(totalDisbursements);
+
+
   };
 
   //  PUBLIC METHODS
