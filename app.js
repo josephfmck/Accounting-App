@@ -667,6 +667,23 @@ const UICtrl = (function () {
       const liItem = document.querySelector(disbursementLiItemID);
 
       liItem.remove();
+    },
+    removeAllItemsUI: function() {
+      //  Grab both UI list items
+      let receiptListItems = document.querySelectorAll(UISelectors.receiptListItems); 
+      let disbursementListItems = document.querySelectorAll(UISelectors.disbursementListItems);
+
+      //  Convert node lists to arrs
+      receiptListItems = Array.from(receiptListItems);
+      disbursementListItems = Array.from(disbursementListItems);
+
+      //  Loop through and remove each li
+      receiptListItems.forEach((liItem) => {
+        liItem.remove();
+      });
+      disbursementListItems.forEach((liItem) => {
+        liItem.remove();
+      });
     }
   };
 })();
@@ -971,7 +988,8 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     UICtrl.showUITotalReceiptAmount(totalReceipts);
     UICtrl.showUITotalDisbursementAmount(totalDisbursements);
 
-
+    //  Remove all items from UI
+    UICtrl.removeAllItemsUI();
   };
 
   //  PUBLIC METHODS
