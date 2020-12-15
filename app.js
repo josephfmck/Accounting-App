@@ -990,6 +990,10 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     //  Remove all items from UI
     UICtrl.removeAllItemsUI();
+
+    //  Hide both ULs
+    UICtrl.hideReceiptList();
+    UICtrl.hideDisbursementList();
   };
 
   //  PUBLIC METHODS
