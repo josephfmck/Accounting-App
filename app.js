@@ -1,4 +1,40 @@
 //  Storage Controller
+const StorageCtrl = (function() {
+
+
+  //  Public methods
+  return {
+    storeReceiptLS: function(newReceipt) {
+      let receipts;
+
+      //  Check if any receipts in LS
+      //  'receipts' is custom name of storage
+      if(localStorage.getItem('receipts') === null) {
+        //  If none set to empty arr
+        receipts = [];
+        //  Push new receipt
+        receipts.push(newReceipt);
+
+        //  Set LS
+        //LS sets/stores strings only so stringify
+        localStorage.setItem('receipts', JSON.stringify(receipts));
+      } else {
+        //  Get receipts already in LS
+        //LS returns strings only so parse to obj
+        receipts = JSON.parse(localStorage.getItem('receipts'));
+
+        //  Push newReceipt
+        receipts.push(newReceipt);
+
+        //  Set LS
+        localStorage.setItem('receipts', JSON.stringify(receipts));
+      }
+
+      //returns receipts LS data
+      localStorage.getItem('receipts');
+    }
+  }
+})();
 
 //  Receipt Controller
 const ReceiptCtrl = (function () {
@@ -782,6 +818,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Update Ending Balance
       UICtrl.showUIEndingBalance(totalReceiptAmount, DisbursementCtrl.getTotalDisbursementAmountData());
+
+      //  Store new receipt in localStorage
+      StorageCtrl.storeReceiptLS(newReceipt);
 
       //  Clear form input
       UICtrl.clearBothFormsInput();
