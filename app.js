@@ -339,7 +339,8 @@ const UICtrl = (function () {
     disbursementDeleteBtn: '#disbursement-delete-btn',
     disbursementBackBtn: '#disbursement-back-btn',
     disbursementListItems: '#disbursement-list li',
-    clearBtn: '#clear-btn'
+    clearBtn: '#clear-btn',
+    endingBalance: '#ending-balance'
   };
 
   //  PUBLIC METHODS
@@ -684,6 +685,13 @@ const UICtrl = (function () {
       disbursementListItems.forEach((liItem) => {
         liItem.remove();
       });
+    },
+    showUIEndingBalance: function(totalReceiptsData, totalDisbursementsData) {
+      console.log(totalReceiptsData);
+      console.log(totalDisbursementsData);
+      const endingBalance = totalReceiptsData - totalDisbursementsData;
+
+      document.querySelector(UISelectors.endingBalance).textContent = endingBalance;
     }
   };
 })();
@@ -772,6 +780,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       //  Add total receipt amount to UI
       UICtrl.showUITotalReceiptAmount(totalReceiptAmount);
 
+      //  Update Ending Balance
+      UICtrl.showUIEndingBalance(totalReceiptAmount, DisbursementCtrl.getTotalDisbursementAmountData());
+
       //  Clear form input
       UICtrl.clearBothFormsInput();
     }
@@ -805,6 +816,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Add total receipt amount to UI
       UICtrl.showUITotalDisbursementAmount(totalDisbursementAmount);
+
+      //  Update Ending Balance
+      UICtrl.showUIEndingBalance(ReceiptCtrl.getTotalReceiptAmountData(), totalDisbursementAmount);
 
       //  Clear form input
       UICtrl.clearBothFormsInput();
@@ -897,6 +911,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Add total amount to UI
     UICtrl.showUITotalReceiptAmount(totalReceiptAmount);
 
+    //  Update Ending Balance
+    UICtrl.showUIEndingBalance(totalReceiptAmount, DisbursementCtrl.getTotalDisbursementAmountData());
+
     UICtrl.clearBothEditStates();
 
     e.preventDefault();
@@ -922,6 +939,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Add total amount to UI
     UICtrl.showUITotalDisbursementAmount(totalDisbursementAmount);
 
+    //  Update Ending Balance
+    UICtrl.showUIEndingBalance(ReceiptCtrl.getTotalReceiptAmountData(), totalDisbursementAmount);
+
     UICtrl.clearBothEditStates();
 
     e.preventDefault();
@@ -943,6 +963,8 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Update total amount UI
     UICtrl.showUITotalReceiptAmount(totalAmount);
 
+    //  Update Ending Balance
+    UICtrl.showUIEndingBalance(totalAmount, DisbursementCtrl.getTotalDisbursementAmountData());
 
     //  Clear when finished edit
     UICtrl.clearBothEditStates();
@@ -966,6 +988,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Update total amount UI
     UICtrl.showUITotalDisbursementAmount(totalAmount);
 
+    //  Update Ending Balance
+    UICtrl.showUIEndingBalance(ReceiptCtrl.getTotalReceiptAmountData(), totalAmount);
+
 
     //  Clear when finished edit
     UICtrl.clearBothEditStates();
@@ -987,6 +1012,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Add totals UI
     UICtrl.showUITotalReceiptAmount(totalReceipts);
     UICtrl.showUITotalDisbursementAmount(totalDisbursements);
+
+    //  Update Ending Balance
+    UICtrl.showUIEndingBalance(totalReceipts, totalDisbursements);
 
     //  Remove all items from UI
     UICtrl.removeAllItemsUI();
@@ -1040,6 +1068,8 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
       //  Add total disbusements UI
       UICtrl.showUITotalDisbursementAmount(totalDisbursements);
 
+      //  Update Ending Balance UI
+      UICtrl.showUIEndingBalance(totalReceipts, totalDisbursements);
 
       //  Load Event Listeners
       loadEventListeners();
