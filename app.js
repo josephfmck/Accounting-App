@@ -34,6 +34,8 @@ const StorageCtrl = (function() {
       localStorage.getItem('receipts');
     },
     storeDisbursementLS: function (newDisbursement) {
+      console.log('storeDisbursementLS')
+      console.log(newDisbursement);
       let disbursements;
 
       //  Check if any disbursements in LS
@@ -103,6 +105,21 @@ const StorageCtrl = (function() {
       });
       //set in LS
       localStorage.setItem('receipts', JSON.stringify(receipts));
+    },
+    updateDisbursementStorage: function(updatedDisbursement) {
+      //grab from LS 
+      let disbursements = JSON.parse(localStorage.getItem('disbursements'));
+
+      //loop, check find with same id, replace it
+      disbursements.forEach((item, index) => {
+        //  Check IDs for same ID
+        if(updatedDisbursement.id === item.id) {
+          //  Splice replace item with updated
+          disbursements.splice(index, 1, updatedDisbursement);
+        }
+      });
+      //  Set in LS
+      localStorage.setItem('disbursements', JSON.stringify(disbursements));
     }
   }
 })();
@@ -563,7 +580,7 @@ const UICtrl = (function () {
       <div class="col-md-3">
         <strong>$${newReceiptItem.amount}</strong>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-1">
         <a href="#">
           <i class="edit-item fa fa-pencil"></i>
         </a>
@@ -602,7 +619,7 @@ const UICtrl = (function () {
             <div class="col-md-3">
               <strong>$${newDisbursementItem.amount}</strong>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
               <a href="#">
                 <i class="edit-item fa fa-pencil"></i>
               </a>
@@ -715,7 +732,7 @@ const UICtrl = (function () {
           <div class="col-md-3">
             <strong>$${updatedReceipt.amount}</strong>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-1">
             <a href="#">
               <i class="edit-item fa fa-pencil"></i>
             </a>
@@ -726,6 +743,7 @@ const UICtrl = (function () {
       });
     },
     updateDisbursementItemUI: function(updatedDisbursement) {
+
       let listDisbursementItems = document.querySelectorAll(UISelectors.disbursementListItems);
 
       //  Convert Node list to arr
@@ -734,7 +752,8 @@ const UICtrl = (function () {
       listDisbursementItems.forEach((listItem) => {
         //  Get id for each item
         const itemID = listItem.getAttribute('id');
-
+        console.log('update loop')
+        console.log(itemID);
         //  Check itemID = id of updatedReceipt passed in
         if(itemID === `disbursement-${updatedDisbursement.id}`) {
           //  Update that item's html
@@ -750,7 +769,7 @@ const UICtrl = (function () {
           <div class="col-md-3">
             <strong>$${updatedDisbursement.amount}</strong>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-1">
             <a href="#">
               <i class="edit-item fa fa-pencil"></i>
             </a>
@@ -1059,6 +1078,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     //  Update Ending Balance
     UICtrl.showUIEndingBalance(ReceiptCtrl.getTotalReceiptAmountData(), totalDisbursementAmount);
+
+    //  Update receipt in LS
+    StorageCtrl.updateDisbursementStorage(updatedDisbursement);
 
     UICtrl.clearBothEditStates();
 
