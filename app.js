@@ -135,6 +135,21 @@ const StorageCtrl = (function() {
       });
       //  Set in LS
       localStorage.setItem('receipts', JSON.stringify(receipts));
+    },
+    deleteDisbursementFromStorage: function(currentDisbursementID) {
+      //  grab from LS
+      disbursements = JSON.parse(localStorage.getItem('disbursements'));
+
+      //  Loop, check for same ID, remove from LS
+      disbursements.forEach((item, index) => {
+        //  Check ID's for same id
+        if(currentDisbursementID === item.id) {
+          //  Remove/splice item
+          disbursements.splice(index, 1);
+        }
+      });
+      //  Set LS with new arr
+      localStorage.setItem('disbursements', JSON.stringify(disbursements));
     }
   }
 })();
@@ -1123,7 +1138,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     UICtrl.showUIEndingBalance(totalAmount, DisbursementCtrl.getTotalDisbursementAmountData());
 
     //  Delete receipt from LS
-    deleteReceiptFromStorage(currentItem.id);
+    StorageCtrl.deleteReceiptFromStorage(currentItem.id);
 
     //  Clear when finished edit
     UICtrl.clearBothEditStates();
@@ -1150,6 +1165,8 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Update Ending Balance
     UICtrl.showUIEndingBalance(ReceiptCtrl.getTotalReceiptAmountData(), totalAmount);
 
+    //  Delete disbursement from LS
+    StorageCtrl.deleteDisbursementFromStorage(currentItem.id);
 
     //  Clear when finished edit
     UICtrl.clearBothEditStates();
