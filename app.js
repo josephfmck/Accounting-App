@@ -120,6 +120,21 @@ const StorageCtrl = (function() {
       });
       //  Set in LS
       localStorage.setItem('disbursements', JSON.stringify(disbursements));
+    },
+    deleteReceiptFromStorage: function(currentReceiptID) {
+      //  Grab from LS
+      let receipts = JSON.parse(localStorage.getItem('receipts'));
+
+      //  Loop, check ID, remove receipt
+      receipts.forEach((item, index) => {
+        //  Check ID's for same ID
+        if(currentReceiptID === item.id) {
+          //  Remove/splice item
+          receipts.splice(index, 1);
+        }
+      });
+      //  Set in LS
+      localStorage.setItem('receipts', JSON.stringify(receipts));
     }
   }
 })();
@@ -1106,6 +1121,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
     //  Update Ending Balance
     UICtrl.showUIEndingBalance(totalAmount, DisbursementCtrl.getTotalDisbursementAmountData());
+
+    //  Delete receipt from LS
+    deleteReceiptFromStorage(currentItem.id);
 
     //  Clear when finished edit
     UICtrl.clearBothEditStates();
