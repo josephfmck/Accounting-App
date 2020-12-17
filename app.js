@@ -573,7 +573,7 @@ const UICtrl = (function () {
       <div class="col-md-2">
         <em>${newReceiptItem.date}</em>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         <p>${newReceiptItem.description}</p>
       </div>
 
@@ -612,7 +612,7 @@ const UICtrl = (function () {
             <div class="col-md-2">
               <em>${newDisbursementItem.date}</em>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <p>${newDisbursementItem.description}</p>
             </div>
       
@@ -725,7 +725,7 @@ const UICtrl = (function () {
           <div class="col-md-2">
             <em>${updatedReceipt.date}</em>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-6">
             <p>${updatedReceipt.description}</p>
           </div>
     
@@ -762,7 +762,7 @@ const UICtrl = (function () {
           <div class="col-md-2">
             <em>${updatedDisbursement.date}</em>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-6">
             <p>${updatedDisbursement.description}</p>
           </div>
     
