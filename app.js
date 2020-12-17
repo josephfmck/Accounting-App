@@ -61,6 +61,19 @@ const StorageCtrl = (function() {
 
       //returns disbursements LS data
       localStorage.getItem('disbursements');
+    },
+    getReceiptsFromStorage: function() {
+      let receipts;
+
+      if(localStorage.getItem('receipts') === null) {
+        //if nothing in LS, receipts = empty arr
+        receipts = [];
+      } else {
+        //grab from LS
+        receipts = JSON.parse(localStorage.getItem('receipts'));
+      }
+
+      return receipts;
     }
   }
 })();
@@ -79,26 +92,27 @@ const ReceiptCtrl = (function () {
 
   //  Data Structure / State
   const data = {
-    receipts: [
-      // {
-      //   id: 0,
-      //   date: "01/09/2019",
-      //   description: "Deposit into account",
-      //   amount: 700.5,
-      // },
-      // {
-      //   id: 1,
-      //   date: "02/17/2019",
-      //   description: "Deposit into account",
-      //   amount: 50.5,
-      // },
-      // {
-      //   id: 2,
-      //   date: "12/15/2019",
-      //   description: "Deposit in account",
-      //   amount: 20.98,
-      // }
-    ],
+    // receipts: [
+    //   // {
+    //   //   id: 0,
+    //   //   date: "01/09/2019",
+    //   //   description: "Deposit into account",
+    //   //   amount: 700.5,
+    //   // },
+    //   // {
+    //   //   id: 1,
+    //   //   date: "02/17/2019",
+    //   //   description: "Deposit into account",
+    //   //   amount: 50.5,
+    //   // },
+    //   // {
+    //   //   id: 2,
+    //   //   date: "12/15/2019",
+    //   //   description: "Deposit in account",
+    //   //   amount: 20.98,
+    //   // }
+    // ],
+    receipts: StorageCtrl.getReceiptsFromStorage(),
     currentReceipt: null,
     totalReceipts: 0,
   };
