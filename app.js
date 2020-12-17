@@ -32,6 +32,35 @@ const StorageCtrl = (function() {
 
       //returns receipts LS data
       localStorage.getItem('receipts');
+    },
+    storeDisbursementLS: function (newDisbursement) {
+      let disbursements;
+
+      //  Check if any disbursements in LS
+      //  'disbursements' is custom name of storage
+      if(localStorage.getItem('disbursements') === null) {
+        //  If none set to empty arr
+        disbursements = [];
+        //  Push new disbursement
+        disbursements.push(newDisbursement);
+
+        //  Set LS
+        //LS sets/stores strings only so stringify
+        localStorage.setItem('disbursements', JSON.stringify(disbursements));
+      } else {
+        //  Get disbursements already in LS
+        //LS returns strings only so parse to obj
+        disbursements = JSON.parse(localStorage.getItem('disbursements'));
+
+        //  Push newDisbursement
+        disbursements.push(newDisbursement);
+
+        //  Set LS
+        localStorage.setItem('disbursements', JSON.stringify(disbursements));
+      }
+
+      //returns disbursements LS data
+      localStorage.getItem('disbursements');
     }
   }
 })();
@@ -858,6 +887,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Update Ending Balance
       UICtrl.showUIEndingBalance(ReceiptCtrl.getTotalReceiptAmountData(), totalDisbursementAmount);
+
+      //  Store new receipt in localStorage
+      StorageCtrl.storeDisbursementLS(newDisbursement);
 
       //  Clear form input
       UICtrl.clearBothFormsInput();
