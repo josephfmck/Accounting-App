@@ -413,7 +413,7 @@ const DisbursementCtrl = (function () {
         }
       });
 
-      return found; //  receipt item updated
+      return found; //  disbursement item updated
     },
     deleteDisbursementItemData: function(currentDisbursementID) {
       //  Get IDS in Arr
@@ -508,7 +508,7 @@ const UICtrl = (function () {
       disbursementItems.forEach((item) => {
         //  Append lis to html
         html += `
-        <li class="list-group-item" id="receipt-${item.id}">
+        <li class="list-group-item" id="disbursement-${item.id}">
         <div class="row">
           <div class="col-md-2">
             <em>${item.date}</em>
@@ -1064,6 +1064,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Update disbursement in data structure
     const updatedDisbursement = DisbursementCtrl.updateDisbursementItemData(input.date, input.description, input.amount);
 
+    console.log('updatedDisbursement');
     console.log(updatedDisbursement);
 
     //  Update UI with updatedDisbursement
@@ -1079,7 +1080,7 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
     //  Update Ending Balance
     UICtrl.showUIEndingBalance(ReceiptCtrl.getTotalReceiptAmountData(), totalDisbursementAmount);
 
-    //  Update receipt in LS
+    //  Update disbursement in LS
     StorageCtrl.updateDisbursementStorage(updatedDisbursement);
 
     UICtrl.clearBothEditStates();
