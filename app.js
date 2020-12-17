@@ -65,6 +65,7 @@ const StorageCtrl = (function() {
     getReceiptsFromStorage: function() {
       let receipts;
 
+      //check if in LS
       if(localStorage.getItem('receipts') === null) {
         //if nothing in LS, receipts = empty arr
         receipts = [];
@@ -74,6 +75,19 @@ const StorageCtrl = (function() {
       }
 
       return receipts;
+    },
+    getDisbursementsFromStorage: function() {
+      let disbursements;
+
+      //check if in LS
+      if(localStorage.getItem('disbursements') === null) {
+        //if nothing in LS, set disbursements to empty arr
+        disbursements = [];
+      } else {
+        //grab from LS
+        disbursements = JSON.parse(localStorage.getItem('disbursements'));
+      }
+      return disbursements;
     }
   }
 })();
@@ -248,26 +262,27 @@ const DisbursementCtrl = (function () {
 
   //  Data Structure / State
   const data = {
-    disbursements: [
-      // {
-      //   id: 0,
-      //   date: "01/06/2019",
-      //   description: "Withdrawal from account",
-      //   amount: 300.5,
-      // },
-      // {
-      //   id: 1,
-      //   date: "02/11/2019",
-      //   description: "Withdrawal from account",
-      //   amount: 40.5,
-      // },
-      // {
-      //   id: 2,
-      //   date: "12/12/2019",
-      //   description: "Withdrawal from account",
-      //   amount: 500.98,
-      // }
-    ],
+    // disbursements: [
+    //   // {
+    //   //   id: 0,
+    //   //   date: "01/06/2019",
+    //   //   description: "Withdrawal from account",
+    //   //   amount: 300.5,
+    //   // },
+    //   // {
+    //   //   id: 1,
+    //   //   date: "02/11/2019",
+    //   //   description: "Withdrawal from account",
+    //   //   amount: 40.5,
+    //   // },
+    //   // {
+    //   //   id: 2,
+    //   //   date: "12/12/2019",
+    //   //   description: "Withdrawal from account",
+    //   //   amount: 500.98,
+    //   // }
+    // ],
+    disbursements: StorageCtrl.getDisbursementsFromStorage(),
     currentDisbursement: null,
     totalDisbursements: 0,
   };
