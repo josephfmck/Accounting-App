@@ -266,8 +266,8 @@ const ReceiptCtrl = (function () {
       //  Parse date to string
       dateInput = dateInput.toString();
 
-      //  Parse amount to a number
-      amountInput = parseInt(amountInput);
+      //  Parse amount to a 2 decimal number
+      amountInput = Number(parseFloat(amountInput).toFixed(2));
 
       let found = null;
 
@@ -425,8 +425,8 @@ const DisbursementCtrl = (function () {
       //  Parse date to string
       dateInput = dateInput.toString();
 
-      //  Parse amount to a number
-      amountInput = parseInt(amountInput);
+      //  Parse amount to a 2 decimal number
+      amountInput = Number(parseFloat(amountInput).toFixed(2));
 
       let found = null;
 
@@ -847,7 +847,7 @@ const UICtrl = (function () {
     showUIEndingBalance: function(totalReceiptsData, totalDisbursementsData) {
       console.log(totalReceiptsData);
       console.log(totalDisbursementsData);
-      const endingBalance = totalReceiptsData - totalDisbursementsData;
+      const endingBalance = Number(totalReceiptsData - totalDisbursementsData).toFixed(2);
 
       document.querySelector(UISelectors.endingBalance).textContent = endingBalance;
     }
