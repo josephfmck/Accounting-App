@@ -680,10 +680,10 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.disbursementList).style.display = 'none';
     },
     showUITotalReceiptAmount: function(totalReceipts) {
-      document.querySelector(UISelectors.receiptAmountTotal).textContent = totalReceipts;
+      document.querySelector(UISelectors.receiptAmountTotal).textContent = Number(totalReceipts.toFixed(2));
     },
     showUITotalDisbursementAmount: function(totalDisbursements) {
-      document.querySelector(UISelectors.disbursementAmountTotal).textContent = totalDisbursements; 
+      document.querySelector(UISelectors.disbursementAmountTotal).textContent = Number(totalDisbursements.toFixed(2)); 
     },
     clearBothEditStates: function() {
       //clear inputs
