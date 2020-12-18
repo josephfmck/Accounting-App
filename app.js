@@ -214,8 +214,8 @@ const ReceiptCtrl = (function () {
       //  Parse date to string
       dateInput = dateInput.toString();
 
-      //  Parase amount to a number
-      amountInput = parseInt(amountInput);
+      //  Parse amount to a decimal number
+      amountInput = Number(parseFloat(amountInput).toFixed(2));
 
       //  Create new Receipt item
       let newReceiptItem = new Receipt(
@@ -373,8 +373,8 @@ const DisbursementCtrl = (function () {
       //  Parse date to string
       dateInput = dateInput.toString();
 
-      //  Parase amount to a number
-      amountInput = parseInt(amountInput);
+      //  Parse amount to a decimal number
+      amountInput = Number(parseFloat(amountInput).toFixed(2));
 
       //  Create new Disbursement item
       let newDisbursementItem = new Disbursement(
