@@ -1019,6 +1019,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Populate inputs with currentReceipt data
       UICtrl.addCurrentReceiptToForm();
+
+      //  Smooth scroll back to top to see edit state
+      window.scrollTo({ top: 0, behavior: 'smooth'});
     }
 
     e.preventDefault();
@@ -1050,6 +1053,9 @@ const AppCtrl = (function (ReceiptCtrl, DisbursementCtrl, UICtrl) {
 
       //  Populate inputs with currentDisbursement data
       UICtrl.addCurrentDisbursementToForm();
+
+      //  Smooth scroll back to top to see edit state
+      window.scrollTo({ top: 0, behavior: 'smooth'});
     }
 
     e.preventDefault();
